@@ -1,8 +1,8 @@
 const express = require('express')
 const passport = require('passport')
-const Player = require('../models/player.js')
-const handle = require('../../lib/error_handler.js')
-const customErrors = require('../../lib/custom_errors.js')
+const Player = require('../models/player')
+const handle = require('../../lib/error_handler')
+const customErrors = require('../../lib/custom_errors')
 const handle404 = customErrors.handle404
 const requireOwnership = customErrors.requireOwnership
 const requireToken = passport.authenticate('bearer', { session: false })
