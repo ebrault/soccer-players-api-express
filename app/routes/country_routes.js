@@ -28,6 +28,7 @@ router.post('/countries', (req, res) => {
 })
 
 router.patch('/countries/:id', (req, res) => {
+  delete req.body.country.owner
   Country.findById(req.params.id)
     .then(handle404)
     .then(country => {
