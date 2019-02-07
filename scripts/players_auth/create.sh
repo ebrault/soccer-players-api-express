@@ -13,7 +13,7 @@ curl "${API}${URL_PATH}" \
       "name": "'"${NAME}"'",
       "number": "'"${NUM}"'",
       "position": "'"${POS}"'",
-      "team": "'"${TEAM}"'"
+      "team": "'"${TID}"'"
     }
   }'
 

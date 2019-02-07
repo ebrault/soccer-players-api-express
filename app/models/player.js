@@ -14,7 +14,8 @@ const playerSchema = new mongoose.Schema({
     required: true
   },
   team: {
-    type: String,
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Team',
     required: true
   },
   owner: {
