@@ -13,7 +13,7 @@ curl "${API}${URL_PATH}" \
       "name": "'"${NAME}"'",
       "nickname": "'"${NICK}"'",
       "stadium": "'"${STD}"'",
-      "league": "'"${LEA}"'"
+      "league": "'"${LID}"'"
     }
   }'
 
