@@ -12,6 +12,11 @@ const nationSchema = new mongoose.Schema({
   administrator: {
     type: String,
     required: true
+  },
+  owner: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    requried: true
   }
 }, {
   timestamps: true
