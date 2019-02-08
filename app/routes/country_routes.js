@@ -1,11 +1,14 @@
 const express = require('express')
+const passport = require('passport')
 const Country = require('../models/country')
 const handle = require('../../lib/error_handler')
 const customErrors = require('../../lib/custom_errors')
 const handle404 = customErrors.handle404
+const requireOwnership = customErrors.requireOwnership
+const requireToken = passport.authenticate('bearer', { session: false })
 const router = express.Router()
 
-router.get('/countries', (req, res) => {
+router.get('/countries', requireToken, (req, res) => {
   Country.find()
     .then(countries => {
       return countries.map(country => country.toObject())
@@ -14,24 +17,26 @@ router.get('/countries', (req, res) => {
     .catch(err => handle(err, res))
 })
 
-router.get('/countries/:id', (req, res) => {
+router.get('/countries/:id', requireToken, (req, res) => {
   Country.findById(req.params.id)
     .then(handle404)
     .then(country => res.status(200).json({ country: country.toObject() }))
     .catch(err => handle(err, res))
 })
 
-router.post('/countries', (req, res) => {
+router.post('/countries', requireToken, (req, res) => {
+  req.body.country.owner = req.user.id
   Country.create(req.body.country)
     .then(country => res.status(201).json({ country: country.toObject() }))
     .catch(err => handle(err, res))
 })
 
-router.patch('/countries/:id', (req, res) => {
+router.patch('/countries/:id', requireToken, (req, res) => {
   delete req.body.country.owner
   Country.findById(req.params.id)
     .then(handle404)
     .then(country => {
+      requireOwnership(req, country)
       Object.keys(req.body.country).forEach(key => {
         if (req.body.country[key] === '') {
           delete req.body.country[key]
@@ -43,10 +48,13 @@ router.patch('/countries/:id', (req, res) => {
     .catch(err => handle(err, res))
 })
 
-router.delete('/countries/:id', (req, res) => {
+router.delete('/countries/:id', requireToken, (req, res) => {
   Country.findById(req.params.id)
     .then(handle404)
-    .then(country => country.remove())
+    .then(country => {
+      requireOwnership(req, country)
+      country.remove()
+    })
     .then(() => res.sendStatus(204))
     .catch(err => handle(err, res))
 })
