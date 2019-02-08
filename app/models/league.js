@@ -6,7 +6,8 @@ const leagueSchema = new mongoose.Schema({
     required: true
   },
   country: {
-    type: String,
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Country',
     required: true
   },
   owner: {

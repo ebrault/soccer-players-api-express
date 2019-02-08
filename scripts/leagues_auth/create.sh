@@ -11,7 +11,7 @@ curl "${API}${URL_PATH}" \
   --data '{
     "league": {
       "name": "'"${NAME}"'",
-      "country": "'"${COU}"'"
+      "country": "'"${CID}"'"
     }
   }'
 
