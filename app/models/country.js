@@ -9,8 +9,9 @@ const countrySchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  body: {
-    type: String,
+  confederation: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Confederation',
     required: true
   },
   owner: {

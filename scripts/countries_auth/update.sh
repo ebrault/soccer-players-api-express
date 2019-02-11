@@ -12,7 +12,7 @@ curl "${API}${URL_PATH}/${ID}" \
     "country": {
       "name": "'"${NAME}"'",
       "continent": "'"${CON}"'",
-      "body": "'"${BOD}"'"
+      "confederation": "'"${CONF_ID}"'"
     }
   }'
 
